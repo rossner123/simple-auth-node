@@ -2,6 +2,9 @@ import express from "express";
 import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+dotenv.config()
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -14,8 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/check", (req, res) => {
-    console.log(req.body);
-    if(req.body.password === "ILoveProgramming"){
+    if(req.body.password === process.env.PASSWORD){
         res.sendFile(`${__dirname}/public/secret.html`);
     }
     else{
