@@ -12,8 +12,13 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
+
 app.get("/", (req, res) => {
-    res.sendFile(`${__dirname}/public/index.html`);
+    res.render("index", {
+        error: null
+    })
 });
 
 app.post("/check", (req, res) => {
@@ -21,7 +26,9 @@ app.post("/check", (req, res) => {
         res.sendFile(`${__dirname}/public/secret.html`);
     }
     else{
-        res.sendFile(`${__dirname}/public/index.html`);
+        res.render("index", {
+            error: "Senha incorreta! Tente novamente."
+        });
     }
 });
 
